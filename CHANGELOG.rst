@@ -1,0 +1,7 @@
+Changelog
+=========
+
+[Unreleased]
+------------
+
+First version.
