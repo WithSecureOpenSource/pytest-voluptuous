@@ -1,3 +1,4 @@
+from pytest_voluptuous.voluptuous import S
 from voluptuous import MultipleInvalid
 
 
