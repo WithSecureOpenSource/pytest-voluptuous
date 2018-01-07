@@ -18,3 +18,4 @@ def pytest_assertrepr_compare(op, left, right):
         return [
             'failed to validation error(s):'
         ] + errors
+    return None
