@@ -14,7 +14,7 @@ def clean(ctx):
 @task
 def develop(ctx):
     """Start development mode."""
-    ctx.run("python setup.py develop")
+    ctx.run("pip install -e .")
 
 
 @task
@@ -26,7 +26,7 @@ def undevelop(ctx):
 @task
 def test(ctx):
     """Run unit tests."""
-    ctx.run("pytest --doctest-glob='*.rst'", pty=True)
+    ctx.run("pytest")
 
 
 @task

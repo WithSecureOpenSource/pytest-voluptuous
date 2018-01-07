@@ -11,7 +11,7 @@ setup(
     author_email='opensource@f-secure.com',
     url='https://github.com/f-secure/pytest-voluptuous',
     packages=find_packages(),
-    install_requires=open('requirements.txt').readlines(),
+    install_requires=open('requirements.in').readlines(),
     classifiers=[
         'Intended Audience :: Developers',
         'Framework :: Pytest',
