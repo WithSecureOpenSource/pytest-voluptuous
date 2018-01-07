@@ -9,11 +9,9 @@ def pytest_assertrepr_compare(op, left, right):
         else:
             source = right
         if isinstance(source.error, MultipleInvalid):
-            errors = ['     - ' + str(error) for error in source.error.errors]
+            errors = ['- {}: {}'.format('.'.join(error.path), error) for error in source.error.errors]
         else:
-            errors = ['     - ' + str(source.error)]
+            errors = ['- {}: {}'.format('.'.join(source.error.path), source.error)]
         return [
             'failed to validation error(s):'
         ] + errors
-
-
