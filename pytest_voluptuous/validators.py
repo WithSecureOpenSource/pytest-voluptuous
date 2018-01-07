@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+
 from voluptuous import Invalid, MultipleInvalid
 from voluptuous.schema_builder import Schema
 

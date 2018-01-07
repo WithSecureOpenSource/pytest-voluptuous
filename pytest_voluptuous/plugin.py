@@ -1,5 +1,8 @@
-from pytest_voluptuous.voluptuous import S
+from __future__ import absolute_import
+
 from voluptuous import MultipleInvalid
+
+from pytest_voluptuous.voluptuous import S
 
 
 def pytest_assertrepr_compare(op, left, right):
