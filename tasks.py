@@ -36,6 +36,12 @@ def package(ctx):
 
 
 @task
+def tox(ctx):
+    """Run tox."""
+    ctx.run("tox")
+
+
+@task
 def release(ctx, version):
     """Releases a new version of the library."""
     ctx.run('git tag -a {}'.format(version))
@@ -57,4 +63,4 @@ def upload(ctx):
     ctx.run('python setup.py bdist_wheel upload')
 
 
-ns = Collection(clean, develop, undevelop, test, package, release, register, upload)
+ns = Collection(clean, develop, undevelop, test, tox, package, release, register, upload)
