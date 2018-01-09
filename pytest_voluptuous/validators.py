@@ -85,7 +85,7 @@ class Unordered(object):
             raise Invalid(self.msg or 'Element #{} ({}) is not valid against any validator'.format(el[0], el[1]))
         elif missing:
             raise MultipleInvalid([
-                Invalid(self.msg or 'Element #{} ({}) is not valida against any validator'.format(el[0], el[1]))
+                Invalid(self.msg or 'Element #{} ({}) is not valid against any validator'.format(el[0], el[1]))
                 for el in missing
             ])
         return v
