@@ -19,8 +19,10 @@ setup(
         'Operating System :: OS Independent',
         'Topic :: Software Development :: Testing',
         'Topic :: Software Development :: Libraries',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
     ],
     entry_points={
         'pytest11': [
