@@ -18,7 +18,7 @@
    :target: https://travis-ci.org/f-secure/pytest-voluptuous
    :alt: Travis-CI
 
-.. image:: https://coveralls.io/repos/github/f-secure/pytest-voluptuous/badge.svg?branch=master
+.. image:: https://coveralls.io/repos/github/F-Secure/pytest-voluptuous/badge.svg?branch=master
    :target: https://coveralls.io/github/f-secure/pytest-voluptuous?branch=master
    :alt: Coveralls
 
