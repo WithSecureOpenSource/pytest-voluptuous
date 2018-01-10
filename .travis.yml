@@ -1,14 +1,21 @@
 language: python
 
 python:
-  - "2.7"
-  - "3.4"
-  - "3.5"
-  - "3.6"
+  - '2.7'
+  - '3.4'
+  - '3.5'
+  - '3.6'
 
 install:
   - pip install -r dev-requirements.txt
   - pip install tox-travis
+  - pip install coveralls
 
 script:
   - tox
+  # Needed for coveralls (.coverage files in tox envs not available):
+  - inv develop
+  - inv test
+
+after_success:
+  - coveralls

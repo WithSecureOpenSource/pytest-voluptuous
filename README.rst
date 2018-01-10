@@ -14,7 +14,7 @@
    :alt: License
    :target: https://pypi.python.org/pypi/pytest-voluptuous
 
-.. image:: https://travis-ci.org/f-secure/pytest-voluptuous.png
+.. image:: https://travis-ci.org/F-Secure/pytest-voluptuous.svg?branch=master
    :target: https://travis-ci.org/f-secure/pytest-voluptuous
    :alt: Travis-CI
 
