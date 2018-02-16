@@ -78,3 +78,31 @@ def test_error_reporting():
     #     "- urls: expected int for dictionary value @ data['urls']\n"
     #     "- releases: extra keys not allowed @ data['releases']"
     # ]
+
+
+def test_list_error_reporting():
+
+    # OK: List of objects
+    sch = S({'foo': [int]})
+    data = {'foo': ['a', 'b']}
+    assert (sch == data) is False
+    assert len(sch.error.errors) == 2
+    assert sch.error.errors[0].path == ['foo', 0]
+    assert sch.error.errors[1].path == ['foo', 1]
+    msgs = pytest_assertrepr_compare('==', sch, data)
+    assert msgs == [
+        "failed to validation error(s):",
+        "- foo.0: expected int @ data['foo'][0]",
+        "- foo.1: expected int @ data['foo'][1]"
+    ]
+
+    sch = S({'foo': [{'id': int}]})
+    data = {'foo': [{'id': 'bar'}, {'id': 'bar2'}]}
+    assert (sch == data) is False
+    assert len(sch.error.errors) == 1  # XXX: Until https://github.com/alecthomas/voluptuous/pull/330 gets merged
+    assert sch.error.errors[0].path == ['foo', 0, 'id']
+    msgs = pytest_assertrepr_compare('==', sch, data)
+    assert msgs == [
+        "failed to validation error(s):",
+        "- foo.0.id: expected int for dictionary value @ data['foo'][0]['id']"
+    ]
