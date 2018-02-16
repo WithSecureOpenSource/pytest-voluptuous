@@ -1,6 +1,14 @@
 Changelog
 =========
 
+[Unreleased]
+------------
+
+**Fix**:
+
+- `#1 <https://github.com/F-Secure/pytest-voluptuous/pull/1>`_:
+  Error reporting failed on lists. Thanks `@rytilahti <https://github.com/rytilahti>`_.
+
 1.0.1 (2017-01-10)
 ------------------
 
