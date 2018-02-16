@@ -47,9 +47,6 @@ Common use case is to validate HTTP API responses (in your functional tests):
               'downloads': list,
               'classifiers': dict,
           }),
-          'releases': {
-             any: dict
-          },
           'urls': int
        }) == resp.json()
 
@@ -61,7 +58,6 @@ If validation fails, comparison returns ``False`` and assert fails, printing err
     E         - info.downloads: expected list for dictionary value @ data[u'info'][u'downloads']
     E         - info.classifiers: expected dict for dictionary value @ data[u'info'][u'classifiers']
     E         - urls: expected int for dictionary value @ data[u'urls']
-    E         - releases.3.1.3: expected dict for dictionary value @ data[u'releases'][u'3.1.3']
 
 Install
 =======
@@ -104,13 +100,14 @@ syntax is quite compact.
 Usage
 =====
 
-In ``pytest``:
+Intro
+-----
 
-    >>> import requests
+Start by specifying a schema:
+
     >>> from pytest_voluptuous import S, Partial, Exact
     >>> from voluptuous.validators import All, Length
-    >>> resp = requests.get('https://pypi.python.org/pypi/pytest/json')
-    >>> assert S({
+    >>> schema = S({
     ...     'info': Partial({
     ...         'package_url': 'http://pypi.python.org/pypi/pytest',
     ...         'platform': 'unix',
@@ -118,21 +115,34 @@ In ``pytest``:
     ...         'downloads': dict,
     ...         'classifiers': list,
     ...     }),
-    ...     'releases': {
-    ...         any: list
-    ...     },
     ...     'urls': list
-    ... }) == resp.json()
+    ... })
 
-Note: if you run this in shell, there's no pytest magic in play and in case of failure, you'll just get
-``AssertionError`` as in:
+Then load up the data to validate:
 
-    >>> assert S({'does_not_exist': 1}) == resp.json()
+    >>> import requests
+    >>> data = requests.get('https://pypi.python.org/pypi/pytest/json').json()
+
+Now if you assert this, the data will be validated against the schema, but instead of raising an error, the comparison
+will just evaluate to ``False`` which fails the assert:
+
+    >>> assert data == schema
     Traceback (most recent call last):
         ...
     AssertionError
 
-Don't worry - the promised magic comes into play when you run the validation in a pytest test.
+Now getting ``AssertionError`` in case the data doesn't match the schema is not very nice but don't worry - there's
+no pytest magic in play here but once you run through pytest you'll rather get::
+
+    E       AssertionError: assert failed to validation error(s):
+    E         - info.platform: not a valid value for dictionary value @ data[u'info'][u'platform']
+    E         - info.description: length of value must be at most 10 for dictionary value @ data[u'info'][u'description']
+    E         - info.downloads: expected list for dictionary value @ data[u'info'][u'downloads']
+    E         - info.classifiers: expected dict for dictionary value @ data[u'info'][u'classifiers']
+    E         - urls: expected int for dictionary value @ data[u'urls']
+
+Details
+-------
 
 Use ``==`` operator to do exact validation:
 
