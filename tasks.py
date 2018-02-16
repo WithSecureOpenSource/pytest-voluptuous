@@ -50,6 +50,7 @@ def tox(ctx):
 @task
 def release(ctx, version):
     """Releases a new version of the library."""
+    ctx.run('git commit --allow-empty -m "Release {}"'.format(version))
     ctx.run('git tag -a {0} -m "Release {0}"'.format(version))
     ctx.run('git push')
     ctx.run('git push --tags')
