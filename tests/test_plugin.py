@@ -80,6 +80,18 @@ def test_error_reporting():
     # ]
 
 
+def test_unordered():
+    actual = ["foobar", "barbaz", "baz"]
+    expected = S(Unordered(["foo", "bar", "baz"]))
+    _ = expected == actual
+    msgs = pytest_assertrepr_compare('==', expected, actual)
+    assert S(Unordered([
+        "failed to validation error(s):",
+        "- Element #0 (foobar) is not valid against any validator",
+        "- Element #1 (barbaz) is not valid against any validator",
+    ])) == msgs
+
+
 def test_list_error_reporting():
 
     # OK: List of objects

@@ -22,4 +22,9 @@ def pytest_assertrepr_compare(op, left, right):
 
 
 def format_error(error):
-    return '- {}: {}'.format('.'.join(map(str, error.path)), error.msg)
+    if error.path:
+        prefix = '.'.join(map(str, error.path)) + ': '
+    else:
+        prefix = ''
+
+    return '- {}{}'.format(prefix, error.msg)
