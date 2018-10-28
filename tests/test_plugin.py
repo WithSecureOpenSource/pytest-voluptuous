@@ -1,7 +1,7 @@
 import six
 
 from pytest_voluptuous import S, Partial, Exact, Unordered
-from voluptuous.validators import All, Length
+from voluptuous.validators import Any, Length
 
 from pytest_voluptuous.plugin import pytest_assertrepr_compare
 
@@ -57,12 +57,15 @@ def test_error_reporting():
     msgs = pytest_assertrepr_compare('==', expected, TEST_DATA)
     assert S(Unordered([
         "failed to validation error(s):",
-        "- info.platform: not a valid value",
-        "- info.description: length of value must be at most 10",
-        "- info.downloads: expected list",
-        "- info.classifiers: expected dict",
-        "- urls: expected int",
-        "- releases: extra keys not allowed"
+        "- info.platform: not a valid value (value: 'unix')",
+        "- info.description: length of value must be at most 10 (value: 'lorem ipsum lorem ipsum')",
+        "- info.downloads: expected list (value: {'last_month': 0})",
+        "- info.classifiers: expected dict (value: ['Development Status :: 6 - Mature', 'Intended Audience :: Developers'])",
+        "- urls: expected int (value: [{}, {}])",
+        Any(
+            "- releases: extra keys not allowed (value: {'3.0.7': [], '3.1.3': []})",
+            "- releases: extra keys not allowed (value: {'3.1.3': [], '3.0.7': []})",
+        ),
     ])) == msgs
 
     # TODO: How to assert the actual output?
@@ -104,8 +107,8 @@ def test_list_error_reporting():
     msgs = pytest_assertrepr_compare('==', sch, data)
     assert msgs == [
         "failed to validation error(s):",
-        "- foo.0: expected int",
-        "- foo.1: expected int"
+        "- foo.0: expected int (value: 'a')",
+        "- foo.1: expected int (value: 'b')"
     ]
 
     sch = S({'foo': [{'id': int}]})
@@ -116,5 +119,5 @@ def test_list_error_reporting():
     msgs = pytest_assertrepr_compare('==', sch, data)
     assert msgs == [
         "failed to validation error(s):",
-        "- foo.0.id: expected int"
+        "- foo.0.id: expected int (value: 'bar')"
     ]
