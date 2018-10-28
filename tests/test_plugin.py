@@ -57,12 +57,12 @@ def test_error_reporting():
     msgs = pytest_assertrepr_compare('==', expected, TEST_DATA)
     assert S(Unordered([
         "failed to validation error(s):",
-        "- info.platform: not a valid value for dictionary value @ data['info']['platform']",
-        "- info.description: length of value must be at most 10 for dictionary value @ data['info']['description']",
-        "- info.downloads: expected list for dictionary value @ data['info']['downloads']",
-        "- info.classifiers: expected dict for dictionary value @ data['info']['classifiers']",
-        "- urls: expected int for dictionary value @ data['urls']",
-        "- releases: extra keys not allowed @ data['releases']"
+        "- info.platform: not a valid value",
+        "- info.description: length of value must be at most 10",
+        "- info.downloads: expected list",
+        "- info.classifiers: expected dict",
+        "- urls: expected int",
+        "- releases: extra keys not allowed"
     ])) == msgs
 
     # TODO: How to assert the actual output?
@@ -71,12 +71,12 @@ def test_error_reporting():
     # out, err = capfd.readouterr()
     # assert out == \
     #     "assert failed to validation error(s):\n"
-    #     "- info.platform: not a valid value for dictionary value @ data['info']['platform']\n"
-    #     "- info.description: length of value must be at most 10 for dictionary value @ data['info']['description']\n"
-    #     "- info.downloads: expected list for dictionary value @ data['info']['downloads']\n"
-    #     "- info.classifiers: expected dict for dictionary value @ data['info']['classifiers']\n"
-    #     "- urls: expected int for dictionary value @ data['urls']\n"
-    #     "- releases: extra keys not allowed @ data['releases']"
+    #     "- info.platform: not a valid value\n"
+    #     "- info.description: length of value must be at most 10\n"
+    #     "- info.downloads: expected list\n"
+    #     "- info.classifiers: expected dict\n"
+    #     "- urls: expected int\n"
+    #     "- releases: extra keys not allowed"
     # ]
 
 
@@ -92,8 +92,8 @@ def test_list_error_reporting():
     msgs = pytest_assertrepr_compare('==', sch, data)
     assert msgs == [
         "failed to validation error(s):",
-        "- foo.0: expected int @ data['foo'][0]",
-        "- foo.1: expected int @ data['foo'][1]"
+        "- foo.0: expected int",
+        "- foo.1: expected int"
     ]
 
     sch = S({'foo': [{'id': int}]})
@@ -104,5 +104,5 @@ def test_list_error_reporting():
     msgs = pytest_assertrepr_compare('==', sch, data)
     assert msgs == [
         "failed to validation error(s):",
-        "- foo.0.id: expected int for dictionary value @ data['foo'][0]['id']"
+        "- foo.0.id: expected int"
     ]
