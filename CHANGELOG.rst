@@ -6,13 +6,13 @@ Changelog
 
 **New**:
 
-- `#3 <https://github.com/F-Secure/pytest-voluptuous/issue/3>`_:
+- `#3 <https://github.com/F-Secure/pytest-voluptuous/issues/3>`_:
   Include actual value in error messages for easier debugging (and remove duplication of error path in error message).
   Thanks `@Turbo87 <https://github.com/Turbo87>`_!
 
 **Fix**:
 
-- `Commit <https://github.com/F-Secure/pytest-voluptuous/pull/4/commits/404407fdd554cdbe17323f1cc935225bb429b29d>`_:
+- `Commit <https://github.com/F-Secure/pytest-voluptuous/pull/4/commits/885dc5bf0ec30ff345738312e842b6bb79a5bd86>`_:
   Skip path prefix in error output, if path is empty (when error is on "main level").
   Thanks `@Turbo87 <https://github.com/Turbo87>`_!
 
@@ -21,7 +21,7 @@ Changelog
 
 **Fix**:
 
-- `#1 <https://github.com/F-Secure/pytest-voluptuous/issue/1>`_:
+- `#1 <https://github.com/F-Secure/pytest-voluptuous/issues/1>`_:
   Error reporting failed on lists.
   Thanks `@rytilahti <https://github.com/rytilahti>`_!
 

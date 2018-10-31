@@ -69,7 +69,7 @@ Works on python 2.7 and 3.4+::
 Changelog
 =========
 
-See `CHANGELOG <CHANGELOG.rst>`_.
+See `CHANGELOG <https://github.com/F-Secure/pytest-voluptuous/blob/master/CHANGELOG.rst>`_.
 
 Features
 ========
@@ -290,4 +290,5 @@ when the order has no meaning. You can also use values inside these as in ``Exac
 License
 =======
 
-Apache 2.0 licensed. See `LICENSE <LICENSE.rst>`_ for more details.
+Apache 2.0 licensed. See `LICENSE <https://github.com/F-Secure/pytest-voluptuous/blob/master/LICENSE.rst>`_ for
+more details.
