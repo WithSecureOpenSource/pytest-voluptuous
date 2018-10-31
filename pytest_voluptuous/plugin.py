@@ -30,7 +30,7 @@ def format_error(error, data):
         prefix = '.'.join(map(str, error.path)) + ': '
         try:
             value = get_value(data, error.path)
-            suffix = (' (value: ' + repr(value) + ')')
+            suffix = (' (actual: ' + repr(value) + ')')
         except:
             suffix = ''
 
