@@ -1,7 +1,7 @@
 import six
 
 from pytest_voluptuous import S, Partial, Exact, Unordered
-from voluptuous.validators import All, Length
+from voluptuous.validators import Any, Length
 
 from pytest_voluptuous.plugin import pytest_assertrepr_compare
 
@@ -57,12 +57,15 @@ def test_error_reporting():
     msgs = pytest_assertrepr_compare('==', expected, TEST_DATA)
     assert S(Unordered([
         "failed to validation error(s):",
-        "- info.platform: not a valid value for dictionary value @ data['info']['platform']",
-        "- info.description: length of value must be at most 10 for dictionary value @ data['info']['description']",
-        "- info.downloads: expected list for dictionary value @ data['info']['downloads']",
-        "- info.classifiers: expected dict for dictionary value @ data['info']['classifiers']",
-        "- urls: expected int for dictionary value @ data['urls']",
-        "- releases: extra keys not allowed @ data['releases']"
+        "- info.platform: not a valid value (actual: 'unix')",
+        "- info.description: length of value must be at most 10 (actual: 'lorem ipsum lorem ipsum')",
+        "- info.downloads: expected list (actual: {'last_month': 0})",
+        "- info.classifiers: expected dict (actual: ['Development Status :: 6 - Mature', 'Intended Audience :: Developers'])",
+        "- urls: expected int (actual: [{}, {}])",
+        Any(
+            "- releases: extra keys not allowed (actual: {'3.0.7': [], '3.1.3': []})",
+            "- releases: extra keys not allowed (actual: {'3.1.3': [], '3.0.7': []})",
+        ),
     ])) == msgs
 
     # TODO: How to assert the actual output?
@@ -71,13 +74,25 @@ def test_error_reporting():
     # out, err = capfd.readouterr()
     # assert out == \
     #     "assert failed to validation error(s):\n"
-    #     "- info.platform: not a valid value for dictionary value @ data['info']['platform']\n"
-    #     "- info.description: length of value must be at most 10 for dictionary value @ data['info']['description']\n"
-    #     "- info.downloads: expected list for dictionary value @ data['info']['downloads']\n"
-    #     "- info.classifiers: expected dict for dictionary value @ data['info']['classifiers']\n"
-    #     "- urls: expected int for dictionary value @ data['urls']\n"
-    #     "- releases: extra keys not allowed @ data['releases']"
+    #     "- info.platform: not a valid value\n"
+    #     "- info.description: length of value must be at most 10\n"
+    #     "- info.downloads: expected list\n"
+    #     "- info.classifiers: expected dict\n"
+    #     "- urls: expected int\n"
+    #     "- releases: extra keys not allowed"
     # ]
+
+
+def test_unordered():
+    actual = ["foobar", "barbaz", "baz"]
+    expected = S(Unordered(["foo", "bar", "baz"]))
+    _ = expected == actual
+    msgs = pytest_assertrepr_compare('==', expected, actual)
+    assert S(Unordered([
+        "failed to validation error(s):",
+        "- Element #0 (foobar) is not valid against any validator",
+        "- Element #1 (barbaz) is not valid against any validator",
+    ])) == msgs
 
 
 def test_list_error_reporting():
@@ -92,8 +107,8 @@ def test_list_error_reporting():
     msgs = pytest_assertrepr_compare('==', sch, data)
     assert msgs == [
         "failed to validation error(s):",
-        "- foo.0: expected int @ data['foo'][0]",
-        "- foo.1: expected int @ data['foo'][1]"
+        "- foo.0: expected int (actual: 'a')",
+        "- foo.1: expected int (actual: 'b')"
     ]
 
     sch = S({'foo': [{'id': int}]})
@@ -104,5 +119,5 @@ def test_list_error_reporting():
     msgs = pytest_assertrepr_compare('==', sch, data)
     assert msgs == [
         "failed to validation error(s):",
-        "- foo.0.id: expected int for dictionary value @ data['foo'][0]['id']"
+        "- foo.0.id: expected int (actual: 'bar')"
     ]
