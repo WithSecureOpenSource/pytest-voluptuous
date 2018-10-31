@@ -28,8 +28,12 @@ def pytest_assertrepr_compare(op, left, right):
 def format_error(error, data):
     if error.path:
         prefix = '.'.join(map(str, error.path)) + ': '
-        value = get_value(data, error.path)
-        suffix = (' (value: ' + repr(value) + ')') if value else ''
+        try:
+            value = get_value(data, error.path)
+            suffix = (' (value: ' + repr(value) + ')')
+        except:
+            suffix = ''
+
     else:
         prefix = ''
         suffix = ''
@@ -38,11 +42,8 @@ def format_error(error, data):
 
 
 def get_value(data, path):
-    try:
-        value = data
-        for key in path:
-            value = value[key]
+    value = data
+    for key in path:
+        value = value[key]
 
-        return value
-    except:
-        return None
+    return value
