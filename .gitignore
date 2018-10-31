@@ -1,4 +1,4 @@
-# no-clean: .idea/ *.egg-info/
+# no-clean: .idea/ *.egg-info/ .python-version
 build/
 dist/
 *.egg-info/
