@@ -7,3 +7,4 @@ dist/
 .cache/
 .tox/
 .coverage
+.python-version
