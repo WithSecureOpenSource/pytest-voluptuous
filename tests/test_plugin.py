@@ -56,7 +56,7 @@ def test_error_reporting():
     _ = expected == TEST_DATA
     msgs = pytest_assertrepr_compare('==', expected, TEST_DATA)
     assert S(Unordered([
-        "failed to validation error(s):",
+        "failed due to validation error(s):",
         "- info.platform: not a valid value (actual: 'unix')",
         "- info.description: length of value must be at most 10 (actual: 'lorem ipsum lorem ipsum')",
         "- info.downloads: expected list (actual: {'last_month': 0})",
@@ -73,7 +73,7 @@ def test_error_reporting():
     # from _pytest.capture import capfd
     # out, err = capfd.readouterr()
     # assert out == \
-    #     "assert failed to validation error(s):\n"
+    #     "assert failed due to validation error(s):\n"
     #     "- info.platform: not a valid value\n"
     #     "- info.description: length of value must be at most 10\n"
     #     "- info.downloads: expected list\n"
@@ -89,7 +89,7 @@ def test_unordered():
     _ = expected == actual
     msgs = pytest_assertrepr_compare('==', expected, actual)
     assert S(Unordered([
-        "failed to validation error(s):",
+        "failed due to validation error(s):",
         "- Element #0 (foobar) is not valid against any validator",
         "- Element #1 (barbaz) is not valid against any validator",
     ])) == msgs
@@ -106,7 +106,7 @@ def test_list_error_reporting():
     assert sch.error.errors[1].path == ['foo', 1]
     msgs = pytest_assertrepr_compare('==', sch, data)
     assert msgs == [
-        "failed to validation error(s):",
+        "failed due to validation error(s):",
         "- foo.0: expected int (actual: 'a')",
         "- foo.1: expected int (actual: 'b')"
     ]
@@ -118,6 +118,6 @@ def test_list_error_reporting():
     assert sch.error.errors[0].path == ['foo', 0, 'id']
     msgs = pytest_assertrepr_compare('==', sch, data)
     assert msgs == [
-        "failed to validation error(s):",
+        "failed due to validation error(s):",
         "- foo.0.id: expected int (actual: 'bar')"
     ]
