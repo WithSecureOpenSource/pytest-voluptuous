@@ -12,6 +12,7 @@ setup(
     url='https://github.com/f-secure/pytest-voluptuous',
     packages=find_packages(),
     install_requires=open('requirements.in').readlines(),
+    python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*',
     classifiers=[
         'Intended Audience :: Developers',
         'Framework :: Pytest',
@@ -23,6 +24,8 @@ setup(
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
     ],
     entry_points={
         'pytest11': [
