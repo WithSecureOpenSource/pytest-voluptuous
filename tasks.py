@@ -62,6 +62,7 @@ def release(ctx, version):
 @task
 def upload(ctx):
     """Uploads packages to PyPI."""
+    ctx.run('twine check dist/pytest_voluptuous-*.whl')
     ctx.run('twine upload dist/pytest_voluptuous-*.whl')
 
 
