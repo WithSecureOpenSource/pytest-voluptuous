@@ -1,6 +1,20 @@
 Changelog
 =========
 
+1.2.0 (2020-06-09)
+------------------
+
+**New**:
+
+- `#7 <https://github.com/F-Secure/pytest-voluptuous/pull/7>`_:
+  Officially support python 3.7 and 3.8. Add ``python_requires`` identifier to package.
+
+**Fix**:
+
+- `#3 <https://github.com/F-Secure/pytest-voluptuous/pull/6>`_:
+  Improve the slightly confusing assertion error message.
+  Thanks `@bjoluc <https://github.com/bjoluc>`_!
+
 1.1.0 (2018-10-31)
 ------------------
 
