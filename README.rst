@@ -86,10 +86,10 @@ Why?
 
 Because writing:
 
-    >>> r = {'info': {'package_url': 'https://pypi.org/pypi/pytest'}}
-    >>> assert 'info' in r
-    >>> assert 'package_url' in r['info']
-    >>> assert r['info']['package_url'] == 'https://pypi.org/pypi/pytest'
+>>> r = {'info': {'package_url': 'https://pypi.org/pypi/pytest'}}
+>>> assert 'info' in r
+>>> assert 'package_url' in r['info']
+>>> assert r['info']['package_url'] == 'https://pypi.org/pypi/pytest'
 
 ...is just *way* too annoying.
 
@@ -107,31 +107,31 @@ Intro
 
 Start by specifying a schema:
 
-    >>> from pytest_voluptuous import S, Partial, Exact
-    >>> from voluptuous.validators import All, Length
-    >>> schema = S({
-    ...     'info': Partial({
-    ...         'package_url': 'https://pypi.org/project/pytest/',
-    ...         'platform': 'unix',
-    ...         'description': Length(min=100),
-    ...         'downloads': dict,
-    ...         'classifiers': list,
-    ...     }),
-    ...     'urls': list
-    ... })
+>>> from pytest_voluptuous import S, Partial, Exact
+>>> from voluptuous.validators import All, Length
+>>> schema = S({
+...     'info': Partial({
+...         'package_url': 'https://pypi.org/project/pytest/',
+...         'platform': 'unix',
+...         'description': Length(min=100),
+...         'downloads': dict,
+...         'classifiers': list,
+...     }),
+...     'urls': list
+... })
 
 Then load up the data to validate:
 
-    >>> import requests
-    >>> data = requests.get('https://pypi.org/pypi/pytest/json').json()
+>>> import requests
+>>> data = requests.get('https://pypi.org/pypi/pytest/json').json()
 
 Now if you assert this, the data will be validated against the schema, but instead of raising an error, the comparison
 will just evaluate to ``False`` which fails the assert:
 
-    >>> assert data == schema
-    Traceback (most recent call last):
-        ...
-    AssertionError
+>>> assert data == schema
+Traceback (most recent call last):
+    ...
+AssertionError
 
 Now getting ``AssertionError`` in case the data doesn't match the schema is not very nice but don't worry - there's
 no pytest magic in play here but once you run through pytest you'll rather get::
@@ -149,120 +149,120 @@ Details
 
 Use ``==`` operator to do exact validation:
 
-    >>> data = {'foo': 1, 'bar': True}
-    >>> S({'foo': 1, 'bar': True}) == data
-    True
+>>> data = {'foo': 1, 'bar': True}
+>>> S({'foo': 1, 'bar': True}) == data
+True
 
 We omit ``assert`` in these examples (for easier doctesting).
 
 Use ``<=`` to do *partial* validation (to allow extra keys, that is):
 
-    >>> S({'foo': 1}) == data  # not valid
-    False
-    >>> S({'foo': 1}) <= data  # valid
-    True
+>>> S({'foo': 1}) == data  # not valid
+False
+>>> S({'foo': 1}) <= data  # valid
+True
 
 The operator you choose gets inherited, so with test data of:
 
-    >>> data = {
-    ...     'outer1': {
-    ...         'inner1': 1,
-    ...         'inner2': True
-    ...     },
-    ...     'outer2': 'foo'
-    ... }
+>>> data = {
+...     'outer1': {
+...         'inner1': 1,
+...         'inner2': True
+...     },
+...     'outer2': 'foo'
+... }
 
 With ``==`` you must provide exact value *also in nested context*:
 
-    >>> S({
-    ...     'outer1': {
-    ...         'inner1': 1,  # this would be valid but...
-    ...         # missing 'inner2'
-    ...     },
-    ...     'outer2': 'foo'
-    ... }) == data
-    False
-    >>> S({
-    ...     'outer1': {
-    ...         'inner1': int,  # exact/partial matching
-    ...         'inner2': bool  # is for keys only
-    ...     },
-    ...     'outer2': 'foo'
-    ... }) == data
-    True
+>>> S({
+...     'outer1': {
+...         'inner1': 1,  # this would be valid but...
+...         # missing 'inner2'
+...     },
+...     'outer2': 'foo'
+... }) == data
+False
+>>> S({
+...     'outer1': {
+...         'inner1': int,  # exact/partial matching
+...         'inner2': bool  # is for keys only
+...     },
+...     'outer2': 'foo'
+... }) == data
+True
 
 ``<=`` implies partial matching:
 
-    >>> S({
-    ...     'outer1': {
-    ...         'inner1': int,
-    ...         # 'inner2' missing but that's ok
-    ...     },
-    ...     # 'outer2' is missing too
-    ... }) <= data
-    True
+>>> S({
+...     'outer1': {
+...         'inner1': int,
+...         # 'inner2' missing but that's ok
+...     },
+...     # 'outer2' is missing too
+... }) <= data
+True
 
 When you need to mix and match operators, you can loosen matching with ``Partial``:
 
-    >>> S({
-    ...     'outer1': Partial({
-    ...         'inner1': int
-    ...         # 'inner2' ok to omit as scope is partial
-    ...     }),
-    ...     'outer2': 'foo'  # can't be missing as outer scope is exact
-    ... }) == data
-    True
+>>> S({
+...     'outer1': Partial({
+...         'inner1': int
+...         # 'inner2' ok to omit as scope is partial
+...     }),
+...     'outer2': 'foo'  # can't be missing as outer scope is exact
+... }) == data
+True
 
 And stricten with ``Exact``:
 
-    >>> S({
-    ...     'outer1': Exact({
-    ...         'inner1': int,
-    ...         'inner2': bool
-    ...     }),
-    ...     # 'outer2' can be missing as outer scope is partial
-    ... }) <= data
-    True
+>>> S({
+...     'outer1': Exact({
+...         'inner1': int,
+...         'inner2': bool
+...     }),
+...     # 'outer2' can be missing as outer scope is partial
+... }) <= data
+True
 
 Remember, matching mode is inherited, so you may end up doing stuff like this:
 
-    >>> data['outer1']['inner1'] = {'prop': 1}
-    >>> S({
-    ...     'outer1': Partial({
-    ...         'inner1': Exact({
-    ...             'prop': 1
-    ...         })
-    ...     }),
-    ...     'outer2': 'foo'
-    ... }) == data
-    True
+>>> data['outer1']['inner1'] = {'prop': 1}
+>>> S({
+...     'outer1': Partial({
+...         'inner1': Exact({
+...             'prop': 1
+...         })
+...     }),
+...     'outer2': 'foo'
+... }) == data
+True
 
 There is no ``>=``. If you want to declare *schema keys that may be missing*, use ``Optional``:
 
-    >>> from voluptuous.schema_builder import Optional
-    >>> S({Optional('foo'): str}) == {'extra': 1}
-    False
-    >>> S({'foo': str}) == {}
-    False
-    >>> S({'foo': str}) <= {}
-    False
-    >>> S({Optional('foo'): str}) == {}
-    True
-    >>> S({Optional('foo'): str}) <= {'extra': 1}
-    True
+>>> from voluptuous.schema_builder import Optional
+>>> S({Optional('foo'): str}) == {'extra': 1}
+False
+>>> S({'foo': str}) == {}
+False
+>>> S({'foo': str}) <= {}
+False
+>>> S({Optional('foo'): str}) == {}
+True
+>>> S({Optional('foo'): str}) <= {'extra': 1}
+True
 
 Or, if you want to make all keys optional, override ``required``:
 
-    >>> from voluptuous.schema_builder import Required
-    >>> S({'foo': str}, required=False) == {}
-    True
+>>> from voluptuous.schema_builder import Required
+>>> S({'foo': str}, required=False) == {}
+True
 
 In these cases, if you want to *require* a key:
 
-    >>> S({'foo': str, Required('bar'): 1}, required=False) == {}
-    False
-    >>> S({'foo': str, Required('bar'): 1}, required=False) == {'bar': 1}
-    True
+>>> S({'foo': str, Required('bar'): 1}, required=False) == {}
+False
+>>> S({'foo': str, Required('bar'): 1}, required=False) == {'bar': 1}
+True
 
 That's it. For available validators, look into `voluptuous docs <https://github.com/alecthomas/voluptuous>`_.
 
