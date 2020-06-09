@@ -6,6 +6,7 @@ setup(
     use_scm_version=True,
     description='Pytest plugin for asserting data against voluptuous schema.',
     long_description=open('README.rst').read() + '\n' + open('CHANGELOG.rst').read(),
+    long_description_content_type='text/x-rst',
     license='ASL 2.0',
     author='F-Secure Corporation',
     author_email='opensource@f-secure.com',
