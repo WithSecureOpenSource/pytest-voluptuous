@@ -11,7 +11,7 @@ Changelog
 
 **Fix**:
 
-- `#3 <https://github.com/F-Secure/pytest-voluptuous/pull/6>`_:
+- `#6 <https://github.com/F-Secure/pytest-voluptuous/pull/6>`_:
   Improve the slightly confusing assertion error message.
   Thanks `@bjoluc <https://github.com/bjoluc>`_!
 
