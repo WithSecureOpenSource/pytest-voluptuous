@@ -15,9 +15,6 @@ install:
 
 script:
   - tox
-  # Needed for coveralls (.coverage files in tox envs not available):
-  - inv develop
-  - inv test
 
 after_success:
   - coveralls

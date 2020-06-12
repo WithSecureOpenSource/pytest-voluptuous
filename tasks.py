@@ -32,7 +32,8 @@ def analyze(ctx):
 @task
 def test(ctx):
     """Run unit tests."""
-    ctx.run('pytest --cov pytest_voluptuous --cov-report term-missing')
+    ctx.run('coverage run --append -m pytest')
+    ctx.run('coverage report')
 
 
 @task
