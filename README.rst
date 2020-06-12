@@ -4,22 +4,20 @@
 
 .. image:: https://img.shields.io/pypi/pyversions/pytest-voluptuous.svg?style=flat
    :alt: Supported versions
-   :target: https://pypi.org/pypi/pytest-voluptuous
 
 .. image:: https://img.shields.io/pypi/implementation/pytest-voluptuous.svg?style=flat
    :alt: Supported implementations
-   :target: https://pypi.org/pypi/pytest-voluptuous
 
 .. image:: https://img.shields.io/pypi/l/pytest-voluptuous.svg?style=flat
    :alt: License
-   :target: https://pypi.org/pypi/pytest-voluptuous
+   :target: https://github.com/F-Secure/pytest-voluptuous/blob/master/LICENSE.rst
 
 .. image:: https://travis-ci.org/F-Secure/pytest-voluptuous.svg?branch=master
    :target: https://travis-ci.org/f-secure/pytest-voluptuous
    :alt: Travis-CI
 
 .. image:: https://coveralls.io/repos/github/F-Secure/pytest-voluptuous/badge.svg?branch=master
-   :target: https://coveralls.io/github/f-secure/pytest-voluptuous?branch=master
+   :target: https://coveralls.io/github/F-Secure/pytest-voluptuous?branch=master
    :alt: Coveralls
 
 =================
