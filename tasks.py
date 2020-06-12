@@ -8,7 +8,7 @@ from invoke.tasks import task
 def clean(ctx):
     """Cleans temporary artifacts of project."""
     ignores = re.match(r'^#\sno-clean:\s(.*)$', open('.gitignore').readline()).group(1).split(' ')
-    ctx.run('git clean -f -X -d {}'.format(' '.join(['-e \!' + re.escape(ign) for ign in ignores])))
+    ctx.run('git clean -f -X -d {}'.format(' '.join([r'-e \!' + re.escape(ign) for ign in ignores])))
 
 
 @task
