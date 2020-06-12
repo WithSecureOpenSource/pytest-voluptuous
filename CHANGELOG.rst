@@ -1,6 +1,15 @@
 Changelog
 =========
 
+TBD
+---
+
+**Dev**:
+
+- `#8 <https://github.com/F-Secure/pytest-voluptuous/pull/8>`_:
+  Fix coverage measurement (lines that were executed before pytest-cov was loaded were not measured before).
+  Thanks `@bjoluc <https://github.com/bjoluc>`_!
+
 1.2.0 (2020-06-09)
 ------------------
 
