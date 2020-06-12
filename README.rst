@@ -4,9 +4,11 @@
 
 .. image:: https://img.shields.io/pypi/pyversions/pytest-voluptuous.svg?style=flat
    :alt: Supported versions
+   :target: https://pypi.org/pypi/pytest-voluptuous
 
 .. image:: https://img.shields.io/pypi/implementation/pytest-voluptuous.svg?style=flat
    :alt: Supported implementations
+   :target: https://pypi.org/pypi/pytest-voluptuous
 
 .. image:: https://img.shields.io/pypi/l/pytest-voluptuous.svg?style=flat
    :alt: License
