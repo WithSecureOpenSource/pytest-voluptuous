@@ -1,7 +1,7 @@
 setuptools-scm == 1.15.6
 pylint == 1.8.1
 invoke == 0.22.0
-requests == 2.20.0
+requests == 2.31.0
 tox == 2.9.1
 pytest == 3.10.1
 coverage == 4.5.4
